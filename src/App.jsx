@@ -1,5 +1,6 @@
 import { useState } from "react";
-import "./App.css"; // Import for custom styles (if needed)
+import "./App.css"; 
+import toast, { Toaster } from 'react-hot-toast';
 
 function App() {
   const [input, setInput] = useState("");
@@ -19,10 +20,12 @@ function App() {
       { name: input, id: todo.length === 0 ? 1 : todo[todo.length - 1].id + 1 },
     ]);
     setInput("");
+    toast.success('Task Added!')
   }
 
   function deletefun(id) {
     SetTodo(todo.filter((item) => item.id !== id));
+    toast.error('Task Deleted!')
   }
 
   function editt(id) {
@@ -36,11 +39,13 @@ function App() {
       todo.map((item) => (item.id === editID ? { ...item, name: input } : item))
     );
     SetEdit(false);
+    toast.success('Task Edited!')
   }
 
   return (
+    
     <div className="container mx-auto px-4 py-8">
-      <h1 className="mb-10 text-xl rounded font-bold">ToDo Add And Edit From Single Input Box</h1>
+      <h1 className="mb-10 text-xl rounded font-bold text-white">ToDo Add And Edit From Single Input Box</h1>
       <div className="flex flex-col gap-4">
         <input
           value={input}
@@ -65,8 +70,8 @@ function App() {
 
       <ul className="list-none mt-4">
         {todo.map((item, index) => (
-          <li key={index} className="flex justify-between items-center py-2 border-b border-gray-300">
-            <span className="text-gray-700">{item.name}</span>
+          <li key={index} className="flex justify-between items-center py-2 ">
+            <span className="text-white text-lg">{item.name}</span>
             <div className="flex gap-2">
               <button
                 className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-1 focus:ring-black"
@@ -81,6 +86,7 @@ function App() {
                 delete
               </button>
             </div>
+            <Toaster />
           </li>
         ))}
       </ul>
